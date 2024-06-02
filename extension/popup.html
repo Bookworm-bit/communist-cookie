@@ -3,11 +3,27 @@
 
 <head>
     <title>Website Blocker</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #points {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        button {
+            margin: 5px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Website Blocker</h1>
-    <p><a href="options.html" target="_blank">Manage Blocked Sites</a></p>
+    <div id="points">Points: 0</div>
+    <button id="block">Block Website</button>
+    <button id="unblock">Unblock Website</button>
+    <script src="popup.js"></script>
 </body>
 
 </html>
