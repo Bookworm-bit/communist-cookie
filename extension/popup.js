@@ -1,6 +1,8 @@
 // popup.js
 document.addEventListener('DOMContentLoaded', () => {
     const pointsDisplay = document.getElementById('points');
+    const blockButton = document.getElementById('block');
+    const unblockButton = document.getElementById('unblock');
 
     const updatePointsDisplay = () => {
         chrome.storage.sync.get('points', (data) => {
@@ -12,7 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.get('blockedDomains', (data) => {
             const blockedDomainsList = document.getElementById('blocked-domains');
             blockedDomainsList.innerHTML = '';
-            data['blocked-domains'].forEach((domain) => {
+            console.log(data, data.blockedDomains);
+            data.blockedDomains.forEach((domain) => {
                 const domainElement = document.createElement('li');
                 domainElement.textContent = domain;
                 blockedDomainsList.appendChild(domainElement);
@@ -25,17 +28,12 @@ document.addEventListener('DOMContentLoaded', () => {
         return urlObject.hostname;
     }
 
-    updatePointsDisplay();
-    updateBlockedDomains();
-
-    const blockButton = document.getElementById('block');
-    const unblockButton = document.getElementById('unblock');
-
     blockButton.addEventListener('click', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const domain = getDomain(tabs[0].url);
             chrome.cookies.getAll({ domain: domain }, (cookies) => {
-                const cookiesCount = cookies.length;
+                //const cookiesCount = cookies.length;
+                cookiesCount = 1;
                 chrome.runtime.sendMessage({ type: 'BLOCK_DOMAIN', domain: domain, cookiesCount }, (response) => {
                     if (response.error) {
                         alert(response.error);
@@ -43,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     updatePointsDisplay();
                     updateBlockedDomains();
-                    alert(`Domain blocked. Cookies: ${cookiesCount}`)
+                    alert(`Domain ${domain} blocked. Cookies: ${cookiesCount}`);
                 });
             });
         });
@@ -53,7 +51,8 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const domain = getDomain(tabs[0].url);
             chrome.cookies.getAll({ domain: domain }, (cookies) => {
-                const cookiesCount = cookies.length;
+                //const cookiesCount = cookies.length;
+                cookiesCount = 1;
                 chrome.runtime.sendMessage({ type: 'UNBLOCK_DOMAIN', domain: domain, cookiesCount }, (response) => {
                     if (response.error) {
                         alert(response.error);
@@ -61,10 +60,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     updatePointsDisplay();
                     updateBlockedDomains();
-                    alert(`Domain unblocked. Cookies: ${cookiesCount}`);
+                    alert(`Domain ${domain} unblocked. Cookies: ${cookiesCount}`);
                 });
             });
         });
     });
+
+    updatePointsDisplay();
+    updateBlockedDomains();
 });
 

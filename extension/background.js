@@ -1,4 +1,9 @@
 // background.js
+
+chrome.runtime.onInstalled.addListener(() => {
+    chrome.storage.sync.set({ points: 0, blockedDomains: [] });
+});
+
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     if (message.type === 'BLOCK_DOMAIN') {
         const { domain, cookiesCount } = message;
