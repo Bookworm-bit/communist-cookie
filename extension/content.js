@@ -1,6 +1,8 @@
+// content.js
 chrome.storage.sync.get('blockedSites', (data) => {
-    const currentUrl = window.location.href;
-    if (data.blockedSites[currentUrl]) {
+    const currentDomain = window.location.hostname;
+
+    if (data.blockedSites[currentDomain]) {
         const overlay = document.createElement('div');
         overlay.style.position = 'fixed';
         overlay.style.top = '0';
