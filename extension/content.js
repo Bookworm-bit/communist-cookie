@@ -3,6 +3,7 @@
 chrome.storage.sync.get('blockedDomains', (data) => {
     const domain = window.location.hostname;
     if (data.blockedDomains.includes(domain)) {
+        window.stop();
         let overlay = document.createElement('div');
         overlay.style.position = 'fixed';
         overlay.style.top = 0;

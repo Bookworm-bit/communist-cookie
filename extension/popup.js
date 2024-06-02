@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     updatePointsDisplay();
                     updateBlockedDomains();
-                    alert(`Domain ${domain} blocked. Points: ${cookiesCount}`);
+                    chrome.tabs.reload(tabs[0].id);
                 });
             });
         });
@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     updatePointsDisplay();
                     updateBlockedDomains();
-                    alert(`Domain ${domain} unblocked. Points: -${cookiesCount}`);
+                    chrome.tabs.reload(tabs[0].id);
                 });
             });
         });
