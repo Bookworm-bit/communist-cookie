@@ -1,0 +1,10 @@
+{
+	"/": [
+		"src/routes/+page.ts"
+	],
+	"/api": [
+		"src/routes/api/+server.ts"
+	],
+	"/ranked": [],
+	"/shelf": []
+}
