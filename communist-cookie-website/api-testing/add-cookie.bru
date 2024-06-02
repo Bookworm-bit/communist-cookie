@@ -1,0 +1,18 @@
+meta {
+  name: add-cookie
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:5173/api
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "name": "instagram",
+    "color": "red"
+  }
+}
