@@ -1,0 +1,47 @@
+body {
+  background-color: black;
+}
+
+p {
+  font-family: 'Kiwi Maru', serif;
+  font-weight: 300;
+  text-size: 12px;
+
+}
+
+h1 {
+  text-align: center;
+  font-family: 'Kiwi Maru', serif;
+  font-size: 16px;
+}
+
+.hide {
+  background-color: rgba(0, 0, 0, 0.6);
+  border-radius: 5px;
+  text-aligh: center;
+  position: absolute;
+  margin: 0 auto;
+  padding: 10px 20px;
+  border: 1px solid #644666;
+  font-size: 12px;
+}
+
+.russia-txt {
+  top: 10%;
+  left: 45%;
+}
+
+.uk-txt {
+  top: 16%;
+  left: 35%;
+}
+
+.usa-txt {
+  top: 25%;
+  left: 9%;
+}
+
+.brazil-txt {
+  top: 50%;
+  left: 18%;
+}

@@ -1,0 +1,155 @@
+html {
+  height: 100%;
+  width: 100%;
+}
+
+.row1 {
+  display: flex;
+}
+
+.column1 {
+  flex: 100%;
+  padding: 10px;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: rgb(251, 236, 208);
+  margin: 0;
+}
+
+._3-column-grid {
+  grid-column-gap: 5em;
+  grid-row-gap: 5em;
+  grid-template-rows: auto;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-auto-columns: 1fr;
+  display: grid;
+}
+
+
+.container {
+  z-index: 100;
+  position: fixed;
+  text-align: center;
+  width: 90%;
+  background-color: rgb(175, 151, 122);
+  padding: 20px;
+  border-radius: 4px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+  align-items: center;
+  justify-content: center;
+}
+
+
+.jartop {
+
+  border: 1px solid #111;
+
+  border-radius: 10px;
+  width: 80px;
+
+  height: 10px;
+  background-color: rgb(240, 231, 214);
+}
+
+.jar {
+  border: 1px solid #111;
+  padding: 10px;
+  border-radius: 10px;
+  width: 80px;
+  height: 100px;
+  background-color: rgb(240, 231, 214);
+
+}
+
+.cookie {
+  border: 1px solid #ff941a;
+  padding: 10px;
+  border-radius: 100%;
+
+  width: 10px;
+  height: 10px;
+  background-color: rgb(226, 155, 24);
+
+}
+
+/*small, medium, full */
+
+ 
+
+.community,
+.matthew {
+  margin-top: 20px;
+  border-top: 1px solid;
+  padding-top: 10px;
+}
+
+
+
+:root {
+  --building-color1: #aa80ff;
+  --building-color2: #66cc99;
+  --building-color3: #cc6699;
+  --building-color4: #538cc6;
+  --window-color1: #bb99ff;
+  --window-color2: #8cd9b3;
+  --window-color3: #d98cb3;
+  --window-color4: #8cb3d9;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+}
+
+.background-buildings,
+.foreground-buildings {
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-evenly;
+  position: absolute;
+  top: 0;
+}
+
+.building-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.window-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+@media (max-width: 1000px) {
+  :root {
+    --building-color1: #000;
+    --building-color2: #000;
+    --building-color3: #000;
+    --building-color4: #000;
+  }
+
+  .sky {
+    background: radial-gradient(closest-corner circle at 15% 15%,
+        #ccc 1%, #8e9173 2%,
+        #445 21%,
+        #223 100%);
+  }
+}
