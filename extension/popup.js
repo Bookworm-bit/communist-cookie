@@ -8,6 +8,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    function getDomain(url) {
+        const urlObject = new URL(url);
+        return urlObject.hostname;
+    }
+
     updatePointsDisplay();
 
     const blockButton = document.getElementById('block');
@@ -15,10 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     blockButton.addEventListener('click', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const url = tabs[0].url;
-            chrome.cookies.getAll({ url: url }, (cookies) => {
+            const domain = getDomain(tabs[0].url);
+            chrome.cookies.getAll({ domain: domain }, (cookies) => {
                 const cookiesCount = cookies.length;
-                chrome.runtime.sendMessage({ type: 'BLOCK_SITE', url: url, cookiesCount }, (response) => {
+                chrome.runtime.sendMessage({ type: 'BLOCK_SITE', domain: domain, cookiesCount }, (response) => {
                     if (response.error) {
                         alert(response.error);
                         return;
@@ -32,10 +37,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     unblockButton.addEventListener('click', () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-            const url = tabs[0].url;
-            chrome.cookies.getAll({ url: url }, (cookies) => {
+            const domain = getDomain(tabs[0].url);
+            chrome.cookies.getAll({ domain: domain }, (cookies) => {
                 const cookiesCount = cookies.length;
-                chrome.runtime.sendMessage({ type: 'UNBLOCK_SITE', url: url, cookiesCount }, (response) => {
+                chrome.runtime.sendMessage({ type: 'UNBLOCK_SITE', domain: domain, cookiesCount }, (response) => {
                     if (response.error) {
                         alert(response.error);
                         return;
