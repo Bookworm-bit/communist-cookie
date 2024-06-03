@@ -1,21 +1,22 @@
-// content.js
 
 chrome.storage.sync.get('blockedDomains', (data) => {
     const domain = window.location.hostname;
     if (data.blockedDomains.includes(domain)) {
         window.stop();
-        let overlay = document.createElement('div');
-        overlay.style.position = 'fixed';
-        overlay.style.top = 0;
-        overlay.style.left = 0;
-        overlay.style.width = '100%';
-        overlay.style.height = '100%';
-        overlay.style.backgroundColor = 'rgba(0,0,0,0.7)';
-        overlay.style.zIndex = 10000;
-        overlay.style.color = 'white';
-        overlay.style.display = 'flex';
-        overlay.style.justifyContent = 'center';
-        overlay.style.alignItems = 'center';
+        const overlay = document.createElement('div');
+        Object.assign(overlay.style, {
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.7)',
+            zIndex: 10000,
+            color: 'white',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        });
         overlay.innerHTML = '<h1>This domain is blocked</h1>';
         document.body.appendChild(overlay);
     }
