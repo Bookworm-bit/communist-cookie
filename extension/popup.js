@@ -1,11 +1,11 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const pointsDisplay = document.getElementById('points');
+    const cookiesDisplay = document.getElementById('cookies');
     const blockButton = document.getElementById('block');
     const unblockButton = document.getElementById('unblock');
 
-    const updatePointsDisplay = () => {
-        chrome.storage.sync.get('points', (data) => {
-            pointsDisplay.textContent = `Points: ${data.points || 0}`;
+    const updateCookiesDisplay = () => {
+        chrome.storage.sync.get('cookies', (data) => {
+            cookiesDisplay.textContent = `Cookies: ${data.cookies || 0}`;
         });
     };
 
@@ -50,7 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert(response.error);
                         return;
                     }
-                    updatePointsDisplay();
+                    updateCookiesDisplay();
                     updateBlockedDomains();
                     chrome.tabs.reload(tabs[0].id);
                 });
@@ -68,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         alert(response.error);
                         return;
                     }
-                    updatePointsDisplay();
+                    updateCookiesDisplay();
                     updateBlockedDomains();
                     chrome.tabs.reload(tabs[0].id);
                 });
@@ -100,6 +100,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    updatePointsDisplay();
+    updateCookiesDisplay();
     updateBlockedDomains();
 });
