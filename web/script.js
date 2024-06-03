@@ -2,7 +2,7 @@ function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
-window.onclick = function(e) {
+window.onclick = function (e) {
   if (!e.target.matches('.dropbtn')) {
     var myDropdown = document.getElementById("myDropdown");
     if (myDropdown.classList.contains('show')) {
@@ -16,7 +16,7 @@ function myFunction() {
   document.getElementById("myDropdown").classList.toggle("show");
 }
 
-window.onclick = function(e) {
+window.onclick = function (e) {
   if (!e.target.matches('.dropbtn')) {
     var myDropdown = document.getElementById("myDropdown");
     if (myDropdown.classList.contains('show')) {
@@ -25,26 +25,26 @@ window.onclick = function(e) {
   }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
   $(".hide").hide();
 
 
-  $(".marker-russia").click(function() {
+  $(".marker-russia").click(function () {
     $(".hide").hide();
     $(".russia-txt").fadeIn(300);
   });
 
-  $(".marker-usa").click(function() {
+  $(".marker-usa").click(function () {
     $(".hide").hide();
     $(".usa-txt").fadeIn(300);
   });
 
-  $(".marker-uk").click(function() {
+  $(".marker-uk").click(function () {
     $(".hide").hide();
     $(".uk-txt").fadeIn(300);
   });
 
-  $(".marker-brazil").click(function() {
+  $(".marker-brazil").click(function () {
     $(".hide").hide();
     $(".brazil-txt").fadeIn(300);
   });

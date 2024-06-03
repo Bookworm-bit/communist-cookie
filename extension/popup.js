@@ -1,4 +1,3 @@
-// popup.js
 document.addEventListener('DOMContentLoaded', () => {
     const pointsDisplay = document.getElementById('points');
     const blockButton = document.getElementById('block');
@@ -6,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const updatePointsDisplay = () => {
         chrome.storage.sync.get('points', (data) => {
-            pointsDisplay.textContent = `Points: ${data.points}`;
+            pointsDisplay.textContent = `Points: ${data.points || 0}`;
         });
     };
 
@@ -14,26 +13,38 @@ document.addEventListener('DOMContentLoaded', () => {
         chrome.storage.sync.get('blockedDomains', (data) => {
             const blockedDomainsList = document.getElementById('blocked-domains');
             blockedDomainsList.innerHTML = '';
-            console.log(data, data.blockedDomains);
-            data.blockedDomains.forEach((domain) => {
+            const domains = data.blockedDomains || [];
+            domains.forEach((domain) => {
                 const domainElement = document.createElement('li');
                 domainElement.textContent = domain;
                 blockedDomainsList.appendChild(domainElement);
             });
         });
-    }
+    };
 
     function getDomain(url) {
         const urlObject = new URL(url);
         return urlObject.hostname;
     }
 
-    blockButton.addEventListener('click', () => {
+    const requestPermissions = (callback) => {
+        chrome.permissions.request({
+            origins: ['<all_urls>']
+        }, (granted) => {
+            if (granted) {
+                alert('Permissions granted');
+                if (callback) callback();
+            } else {
+                alert('Permissions not granted');
+            }
+        });
+    };
+
+    const handleBlockDomain = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const domain = getDomain(tabs[0].url);
             chrome.cookies.getAll({ domain: domain }, (cookies) => {
-                //const cookiesCount = cookies.length;
-                cookiesCount = 1;
+                const cookiesCount = cookies.length;
                 chrome.runtime.sendMessage({ type: 'BLOCK_DOMAIN', domain: domain, cookiesCount }, (response) => {
                     if (response.error) {
                         alert(response.error);
@@ -45,14 +56,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         });
-    });
+    };
 
-    unblockButton.addEventListener('click', () => {
+    const handleUnblockDomain = () => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const domain = getDomain(tabs[0].url);
             chrome.cookies.getAll({ domain: domain }, (cookies) => {
-                //const cookiesCount = cookies.length;
-                cookiesCount = 1;
+                const cookiesCount = cookies.length;
                 chrome.runtime.sendMessage({ type: 'UNBLOCK_DOMAIN', domain: domain, cookiesCount }, (response) => {
                     if (response.error) {
                         alert(response.error);
@@ -64,9 +74,32 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         });
+    };
+
+    blockButton.addEventListener('click', () => {
+        chrome.permissions.contains({
+            origins: ['<all_urls>']
+        }, (result) => {
+            if (result) {
+                handleBlockDomain();
+            } else {
+                requestPermissions(handleBlockDomain);
+            }
+        });
+    });
+
+    unblockButton.addEventListener('click', () => {
+        chrome.permissions.contains({
+            origins: ['<all_urls>']
+        }, (result) => {
+            if (result) {
+                handleUnblockDomain();
+            } else {
+                requestPermissions(handleUnblockDomain);
+            }
+        });
     });
 
     updatePointsDisplay();
     updateBlockedDomains();
 });
-
